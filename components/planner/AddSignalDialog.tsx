@@ -268,3 +268,4 @@ export function AddSignalDialog({ onAdd }: AddSignalDialogProps) {
     </Dialog>
   );
 }
+

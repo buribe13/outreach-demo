@@ -204,3 +204,4 @@ export function GuidancePanel({ selectedWindow, allWindows }: GuidancePanelProps
   );
 }
 
+

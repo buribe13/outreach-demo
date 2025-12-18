@@ -144,3 +144,4 @@ export interface LocalPlannerData {
   lastModified: string;
   version: number;
 }
+
