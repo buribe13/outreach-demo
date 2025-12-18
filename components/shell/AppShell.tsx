@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
 /**
  * OUTREACH WINDOW PLANNER - App Shell
- * 
+ *
  * Main layout component inspired by Cursor's dashboard.
  * Provides navigation, context, and ethical disclaimers.
  */
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 import {
   LayoutDashboard,
   CalendarClock,
@@ -29,7 +29,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface NavItem {
   href: string;
@@ -40,28 +40,28 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    href: '/',
-    label: 'Overview',
+    href: "/",
+    label: "Overview",
     icon: <LayoutDashboard className="h-4 w-4" />,
-    description: 'Dashboard summary and upcoming windows',
+    description: "Dashboard summary and upcoming windows",
   },
   {
-    href: '/planner',
-    label: 'Planner',
+    href: "/planner",
+    label: "Planner",
     icon: <CalendarClock className="h-4 w-4" />,
-    description: 'Timeline view and outreach planning',
+    description: "Timeline view and outreach planning",
   },
   {
-    href: '/signals',
-    label: 'Signals',
+    href: "/signals",
+    label: "Signals",
     icon: <Layers className="h-4 w-4" />,
-    description: 'Browse and filter temporal signals',
+    description: "Browse and filter temporal signals",
   },
   {
-    href: '/scenario',
-    label: 'Scenario',
+    href: "/scenario",
+    label: "Scenario",
     icon: <Beaker className="h-4 w-4" />,
-    description: 'Speculative planning mode',
+    description: "Speculative planning mode",
   },
 ];
 
@@ -71,8 +71,8 @@ interface AppShellProps {
   onScenarioToggle?: (enabled: boolean) => void;
 }
 
-export function AppShell({ 
-  children, 
+export function AppShell({
+  children,
   scenarioMode = false,
   onScenarioToggle,
 }: AppShellProps) {
@@ -83,7 +83,7 @@ export function AppShell({
     <TooltipProvider>
       <div className="flex h-screen bg-background">
         {/* Sidebar */}
-        <aside 
+        <aside
           className={cn(
             "flex flex-col border-r border-sidebar-border bg-sidebar transition-all duration-300",
             collapsed ? "w-16" : "w-64"
@@ -116,7 +116,9 @@ export function AppShell({
           {/* Context Badge */}
           {!collapsed && (
             <div className="px-4 py-3">
-              <div className="text-xs text-sidebar-foreground/60 mb-1">Focus Area</div>
+              <div className="text-xs text-sidebar-foreground/60 mb-1">
+                Focus Area
+              </div>
               <Badge variant="outline" className="text-xs">
                 Los Angeles / Koreatown
               </Badge>
@@ -129,15 +131,15 @@ export function AppShell({
           <nav className="flex-1 p-2 space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
-              
+
               const navLink = (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                    isActive 
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground" 
+                    isActive
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
                       : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
                   )}
                 >
@@ -145,21 +147,21 @@ export function AppShell({
                   {!collapsed && <span>{item.label}</span>}
                 </Link>
               );
-              
+
               if (collapsed) {
                 return (
                   <Tooltip key={item.href} delayDuration={0}>
-                    <TooltipTrigger asChild>
-                      {navLink}
-                    </TooltipTrigger>
+                    <TooltipTrigger asChild>{navLink}</TooltipTrigger>
                     <TooltipContent side="right" className="flex flex-col">
                       <span className="font-medium">{item.label}</span>
-                      <span className="text-xs text-muted-foreground">{item.description}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {item.description}
+                      </span>
                     </TooltipContent>
                   </Tooltip>
                 );
               }
-              
+
               return navLink;
             })}
           </nav>
@@ -188,7 +190,7 @@ export function AppShell({
                 </div>
               </div>
             )}
-            
+
             <Button
               variant="ghost"
               size="sm"
@@ -209,25 +211,6 @@ export function AppShell({
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col overflow-hidden">
-          {/* Ethical Disclaimer Banner */}
-          <div className="bg-muted/50 border-b border-border px-4 py-2">
-            <div className="flex items-center justify-between max-w-7xl mx-auto">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Info className="h-3 w-3" />
-                <span>
-                  <strong>Organization-only planning tool.</strong> No real-time data. No enforcement tracking. No individual surveillance.
-                </span>
-              </div>
-              <a 
-                href="#ethics" 
-                className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
-              >
-                Learn more
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
-          </div>
-
           {/* Page Content */}
           <div className="flex-1 overflow-auto custom-scrollbar">
             {children}
@@ -237,5 +220,3 @@ export function AppShell({
     </TooltipProvider>
   );
 }
-
-
